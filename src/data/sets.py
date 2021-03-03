@@ -135,7 +135,36 @@ def load_sets(path='../data/processed/', val=False):
     
     return X_train, y_train, X_val, y_val, X_test, y_test
     
+
+def pop_target(df, target_col, to_numpy=False):
+    """Extract target variable from dataframe and convert to nympy arrays if required
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Dataframe
+    target_col : str
+        Name of the target variable
+    to_numpy : bool
+        Flag stating to convert to numpy array or not
+
+    Returns
+    -------
+    pd.DataFrame/Numpy array
+        Subsetted Pandas dataframe containing all features
+    pd.DataFrame/Numpy array
+        Subsetted Pandas dataframe containing the target
+    """
+
+    df_copy = df.copy()
+    target = df_copy.pop(target_col)
     
+    if to_numpy:
+        df_copy = df_copy.to_numpy()
+        target = target.to_numpy()
+    
+    return df_copy, target
+       
     
 def split_sets_random(df, target_col, test_ratio=0.2, to_numpy=False):
     """Split sets randomly
